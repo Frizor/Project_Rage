@@ -18,6 +18,6 @@ public class TestScript : MonoBehaviour
 
     void MoveTest()
     {
-        Debug.Log('faffaaf')
+        Debug.Log("faffaaf");
     }
 }
