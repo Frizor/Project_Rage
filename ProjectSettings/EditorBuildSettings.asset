@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Project_Rage/Scenes/MainMenu/Menu.unity
+    guid: 463c277446d1ed448930c09de59bb96b
+  - enabled: 1
+    path: Assets/Project_Rage/Scenes/Game/Game.unity
+    guid: b8fee37ea46d39a4ca99ae848fee64ff
   m_configObjects: {}
