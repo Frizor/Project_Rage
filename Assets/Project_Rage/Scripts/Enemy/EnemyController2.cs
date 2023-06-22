@@ -9,9 +9,9 @@ public class EnemyController : MonoBehaviour
     public delegate void OnTargetCaught(GameObject target);
     public static event OnTargetCaught TargetCaughtEvent;
 
-    public Transform[] patrolPoints; // Массив точек патрулирования
-    public float patrolDelayMin = 1f; // Минимальная задержка на точке патрулирования
-    public float patrolDelayMax = 3f; // Максимальная задержка на точке патрулирования
+    public Transform[] patrolPoints; // РњР°СЃСЃРёРІ С‚РѕС‡РµРє РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
+    public float patrolDelayMin = 1f; // РњРёРЅРёРјР°Р»СЊРЅР°СЏ Р·Р°РґРµСЂР¶РєР° РЅР° С‚РѕС‡РєРµ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
+    public float patrolDelayMax = 3f; // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ Р·Р°РґРµСЂР¶РєР° РЅР° С‚РѕС‡РєРµ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
 
     private NavMeshAgent navMeshAgent;
     private int currentPatrolIndex;
@@ -19,9 +19,9 @@ public class EnemyController : MonoBehaviour
     private bool isPatrolling = true;
 
     public Transform player;
-    public float viewRadius = 10f; // Радиус обзора NPC
+    public float viewRadius = 10f; // Р Р°РґРёСѓСЃ РѕР±Р·РѕСЂР° NPC
     [Range(0, 360)]
-    public float viewAngle = 90f; // Угол обзора NPC
+    public float viewAngle = 90f; // РЈРіРѕР» РѕР±Р·РѕСЂР° NPC
 
     private bool isPlayerDetected = false;
     private FieldOfView fieldOfView;
@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
         {
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
             {
-                // Если достигнута точка патрулирования, задержка перед движением к следующей точке
+                // Р•СЃР»Рё РґРѕСЃС‚РёРіРЅСѓС‚Р° С‚РѕС‡РєР° РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ, Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РґРІРёР¶РµРЅРёРµРј Рє СЃР»РµРґСѓСЋС‰РµР№ С‚РѕС‡РєРµ
                 patrolTimer += Time.deltaTime;
                 if (patrolTimer >= GetRandomPatrolDelay())
                 {
@@ -53,14 +53,14 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            // Передвигаться к игроку, если он обнаружен
+            // РџРµСЂРµРґРІРёРіР°С‚СЊСЃСЏ Рє РёРіСЂРѕРєСѓ, РµСЃР»Рё РѕРЅ РѕР±РЅР°СЂСѓР¶РµРЅ
             if (isPlayerDetected)
             {
                 navMeshAgent.SetDestination(player.position);
             }
             else
             {
-                // Вернуться к патрулированию, если игрок не обнаружен
+                // Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЋ, РµСЃР»Рё РёРіСЂРѕРє РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅ
                 isPatrolling = true;
                 SetNextPatrolPoint();
             }
@@ -75,14 +75,14 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        // Выбрать следующую точку патрулирования
+        // Р’С‹Р±СЂР°С‚СЊ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
         patrolTimer = 0f;
 
-        // Установить следующую точку патрулирования как цель навигации
+        // РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ РєР°Рє С†РµР»СЊ РЅР°РІРёРіР°С†РёРё
         navMeshAgent.SetDestination(patrolPoints[currentPatrolIndex].position);
 
-        // Отключить обнаружение игрока, если было включено
+        // РћС‚РєР»СЋС‡РёС‚СЊ РѕР±РЅР°СЂСѓР¶РµРЅРёРµ РёРіСЂРѕРєР°, РµСЃР»Рё Р±С‹Р»Рѕ РІРєР»СЋС‡РµРЅРѕ
         isPlayerDetected = false;
     }
 
@@ -110,7 +110,7 @@ public class EnemyController : MonoBehaviour
             isPatrolling = false;
             isPlayerDetected = true;
 
-            // Вызвать событие обнаружения игрока
+            // Р’С‹Р·РІР°С‚СЊ СЃРѕР±С‹С‚РёРµ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ РёРіСЂРѕРєР°
             TargetCaughtEvent?.Invoke(target);
         }
     }
