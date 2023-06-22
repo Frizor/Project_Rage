@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 398432724}
   - component: {fileID: 398432722}
   - component: {fileID: 398432723}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,7 +1584,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1786,9 +1786,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NavigationSurface: {fileID: 998802804}
-  Target: {fileID: 0}
-  cameraDistance: 10
   cameraHeight: 5
+  minFieldOfView: 30
+  maxFieldOfView: 90
+  zoomSpeed: 30
+  accelerationSpeed: 6000
+  accelerationDuration: 0.2
+  accelerationCooldown: 5
 --- !u!65 &643093711
 BoxCollider:
   m_ObjectHideFlags: 0
