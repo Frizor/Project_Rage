@@ -5,21 +5,22 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject NavigationSurface;
     public float cameraHeight = 5f;
-    public float minFieldOfView = 30f; // Минимальный обзор
-    public float maxFieldOfView = 90f; // Максимальный обзор
-    public float zoomSpeed = 5f; // Скорость приближения/отдаления камеры
-    public float accelerationSpeed = 1000f; // Скорость ускорения
-    public float accelerationDuration = 0.5f; // Продолжительность ускорения
-    public float accelerationCooldown = 10f; // Период восстановления ускорения
+    public float minFieldOfView = 30f;
+    public float maxFieldOfView = 90f;
+    public float zoomSpeed = 5f;
+    public float accelerationSpeed = 1000f;
+    public float accelerationDuration = 0.5f;
+    public float accelerationCooldown = 10f;
+    public float rotationSpeed = 10f; // Speed of rotation on right-click
 
     private NavMeshAgent _navMeshAgent;
     private bool _gameFinished;
     private Camera _mainCamera;
     private Vector3 _cameraOffset;
-    private bool _isAccelerating; // Флаг активации ускорения
-    private float _originalSpeed; // Исходная скорость NavMeshAgent
-    private float _accelerationTimer; // Таймер для ускорения
-    private float _cooldownTimer; // Таймер перезарядки
+    private bool _isAccelerating;
+    private float _originalSpeed;
+    private float _accelerationTimer;
+    private float _cooldownTimer;
 
     private void Start()
     {
@@ -33,25 +34,26 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        // mouse click and hold
         if (Input.GetMouseButton(0))
         {
             MovePlayerTo(Input.mousePosition);
         }
 
-        // Обновление позиции камеры
+        if (Input.GetMouseButton(1))
+        {
+            RotatePlayer();
+        }
+
         Vector3 cameraPosition = transform.position + _cameraOffset;
         _mainCamera.transform.position = cameraPosition;
         _mainCamera.transform.LookAt(transform.position);
 
-        // Управление камерой через Field of View (FOV)
         float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
         float fieldOfView = _mainCamera.fieldOfView;
         fieldOfView -= scrollWheel * zoomSpeed;
         fieldOfView = Mathf.Clamp(fieldOfView, minFieldOfView, maxFieldOfView);
         _mainCamera.fieldOfView = fieldOfView;
 
-        // Ускорение при нажатии на пробел (Spacebar)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!_isAccelerating && _cooldownTimer <= 0f)
@@ -60,7 +62,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Обновление таймеров
         if (_isAccelerating)
         {
             _accelerationTimer -= Time.deltaTime;
@@ -84,6 +85,21 @@ public class PlayerController : MonoBehaviour
             if (hit.collider.gameObject == NavigationSurface)
             {
                 _navMeshAgent.SetDestination(hit.point);
+            }
+        }
+    }
+
+    private void RotatePlayer()
+    {
+        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 targetDirection = hit.point - transform.position;
+            targetDirection.y = 0f;
+            if (targetDirection.magnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
         }
     }
