@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10f; // Speed of rotation on right-click
 
     private NavMeshAgent _navMeshAgent;
-    private bool _gameFinished;
     private Camera _mainCamera;
     private Vector3 _cameraOffset;
     private bool _isAccelerating;
@@ -37,11 +36,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            //Debug.Log("LMB");
             MovePlayerTo(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
+            //Debug.Log("RMB");
             RotatePlayer();
         }
 
