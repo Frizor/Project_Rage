@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4484082, g: 0.4984414, b: 0.5756235, a: 1}
+  m_IndirectSpecularColor: {r: 0.44840848, g: 0.49844193, b: 0.5756241, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -924,6 +924,10 @@ PrefabInstance:
     - target: {fileID: 4417343662582019891, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5445778657091531591, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6161614987128222214, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
       propertyPath: m_RootOrder
@@ -2171,6 +2175,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5445778657091531591, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6161614987128222214, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2234,6 +2242,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1199487087404034555, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1493546379}
+    - targetCorrespondingSourceObject: {fileID: 1199487087404034555, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1493546383}
   m_SourcePrefab: {fileID: 100100000, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
 --- !u!1 &643093709
 GameObject:
@@ -4166,7 +4177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  canvas: {fileID: 1219146416}
+  canvas: {fileID: 0}
 --- !u!1 &1229418024
 GameObject:
   m_ObjectHideFlags: 0
@@ -4695,7 +4706,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  canvas: {fileID: 0}
+  canvas: {fileID: 1219146416}
+--- !u!95 &1493546383
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493546375}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b3c344cb672cddc4590db03777840e5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1519928102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5454482134719058401, guid: 794c04f8c3e53c344b9a97a4411cacb7, type: 3}
@@ -4949,6 +4981,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 643093714}
     m_Modifications:
+    - target: {fileID: 1369712339140100514, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369712339140100514, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
+      propertyPath: m_IgnoreReversedGraphics
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2781169666792136704, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6074,9 +6114,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2402293422017813139, guid: db187417562a1024fb89143967350dee, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2402293422017813139, guid: db187417562a1024fb89143967350dee, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3666154557190810970, guid: db187417562a1024fb89143967350dee, type: 3}
       propertyPath: m_Speed
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3666154557190810970, guid: db187417562a1024fb89143967350dee, type: 3}
       propertyPath: m_StoppingDistance
@@ -6124,13 +6172,13 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1738124187944470011, guid: db187417562a1024fb89143967350dee, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1261326423}
+    - targetCorrespondingSourceObject: {fileID: 1738124187944470011, guid: db187417562a1024fb89143967350dee, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 659394923}
     - targetCorrespondingSourceObject: {fileID: 1738124187944470011, guid: db187417562a1024fb89143967350dee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1053546447}
-    - targetCorrespondingSourceObject: {fileID: 1738124187944470011, guid: db187417562a1024fb89143967350dee, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1261326423}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2402293422017813139, guid: db187417562a1024fb89143967350dee, type: 3}
       insertIndex: -1
