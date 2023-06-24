@@ -147,7 +147,7 @@ public class GameMenuController4 : MonoBehaviour
 
     private void QuitGame()
     {
-        Debug.Log("Выход из игры");
+        Debug.Log("Р’С‹С…РѕРґ РёР· РёРіСЂС‹");
         Application.Quit();
     }
 }
