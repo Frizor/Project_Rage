@@ -31,7 +31,7 @@ public class LifeManager : MonoBehaviour
     {
         if (currentHealth > 0)
         {
-            if (enemyController != null && gameObject.CompareTag("Enemy")) 
+            if (enemyController != null && gameObject.CompareTag("Enemy"))
             {
                 enemyController.StartChasingPlayer();
             }
@@ -50,20 +50,25 @@ public class LifeManager : MonoBehaviour
 
         isDead = true;
 
-        if (gameObject.CompareTag("Enemy"))
+        if (GetComponent<PlayerController>() != null)
+        {
+            // Код для игрока
+            // Пример: SceneManager.LoadScene("GameOverScene");
+        }
+        else if (GetComponent<EnemyController3>() != null)
         {
             // Остановить движение врага
             GetComponent<EnemyController3>().StopMovement();
 
             // Отключить компонент NavMeshAgent
             navMeshAgent.enabled = false;
+
+            // Удалить объект врага через 10 секунд
+            StartCoroutine(DestroyEnemy(10f));
         }
 
         // Очистить ссылку на LifeManager, чтобы избежать лишних вызовов метода TakeDamage
         lifeManager = null;
-
-        // Удалить объект врага через 10 секунд
-        StartCoroutine(DestroyEnemy(10f));
     }
 
     private IEnumerator DestroyEnemy(float delay)
@@ -72,6 +77,6 @@ public class LifeManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // Удаление объекта врага
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }

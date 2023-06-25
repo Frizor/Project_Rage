@@ -17,11 +17,13 @@ public class EnemyController3 : MonoBehaviour
 
     public LayerMask targetMask; // Маска целей для обнаружения
     public LayerMask obstacleMask; // Маска препятствий для обнаружения
+    public float attackRange = 2f; // Расстояние для атаки мечом
 
     public float chaseDuration = 10f; // Продолжительность преследования в секундах
 
     private NavMeshAgent navMeshAgent;
     private LifeManager lifeManager;
+    private EnemySwordAttack enemySwordAttack;
     private int currentPatrolIndex;
     private float patrolTimer;
     private bool isPatrolling = true;
@@ -38,6 +40,8 @@ public class EnemyController3 : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         lifeManager = GetComponent<LifeManager>();
+        enemySwordAttack = GetComponent<EnemySwordAttack>();
+
     }
 
     private void Start()
@@ -74,6 +78,13 @@ public class EnemyController3 : MonoBehaviour
                 // Передвигаться к игроку, если он обнаружен
                 if (isPlayerDetected)
                 {
+                    float distanceToPlayer = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+                    if (distanceToPlayer <= attackRange)
+                    {
+                        // Начать атаку мечом
+                        enemySwordAttack.Attack();
+                    }
+
                     if (isChasingPlayer)
                     {
                         // Продолжаем преследовать игрока
