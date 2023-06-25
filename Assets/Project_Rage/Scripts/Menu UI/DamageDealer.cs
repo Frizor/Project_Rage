@@ -16,10 +16,10 @@ public class DamageDealer : MonoBehaviour
 
     private void OnTriggerEnter(Collider targetCollider)
     {
-		LifeManager lifeManager = targetCollider.GetComponent<LifeManager>();
+        LifeManager lifeManager = targetCollider.GetComponent<LifeManager>();
         HealthBarUI healthBarUI = targetCollider.GetComponentInChildren<HealthBarUI>();
 
-/*        Debug.Log(canvas);*/
+        /*        Debug.Log(canvas);*/
 
         if (lifeManager != null && healthBarUI != null)
         {

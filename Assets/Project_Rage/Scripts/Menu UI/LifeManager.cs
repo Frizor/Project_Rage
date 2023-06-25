@@ -7,6 +7,7 @@ public class LifeManager : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
     private LifeManager lifeManager;
+    public GameObject losePanel;
     private EnemyController3 enemyController;
     public int maxHealth = 100; // Максимальное здоровье
     private int currentHealth; // Текущее здоровье
@@ -54,6 +55,10 @@ public class LifeManager : MonoBehaviour
         {
             // Код для игрока
             // Пример: SceneManager.LoadScene("GameOverScene");
+            if (losePanel != null)
+            {
+                losePanel.SetActive(true);
+            }
         }
         else if (GetComponent<EnemyController3>() != null)
         {
