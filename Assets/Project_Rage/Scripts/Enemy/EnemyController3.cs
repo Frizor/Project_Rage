@@ -21,78 +21,112 @@ public class EnemyController3 : MonoBehaviour
     public float chaseDuration = 10f; // ѕродолжительность преследовани€ в секундах
 
     private NavMeshAgent navMeshAgent;
+    private LifeManager lifeManager;
     private int currentPatrolIndex;
     private float patrolTimer;
     private bool isPatrolling = true;
     private bool isPlayerDetected = false;
     private bool isChasingPlayer = false;
+    private bool isTakingDamage = false;
     private float chaseTimer;
 
     private Vector3 startPosition; // Ќачальна€ позици€ дл€ возвращени€ после потери интереса
 
+    private List<int> availablePatrolIndices = new List<int>();
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        lifeManager = GetComponent<LifeManager>();
     }
 
     private void Start()
     {
         startPosition = transform.position;
+
+        // «аполн€ем список доступных дл€ патрулировани€ индексов точек
+        for (int i = 0; i < patrolPoints.Length; i++)
+        {
+            availablePatrolIndices.Add(i);
+        }
+
         SetNextPatrolPoint();
     }
 
     private void Update()
     {
-        if (isPatrolling)
+        if (navMeshAgent.enabled)
         {
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
+            if (isPatrolling)
             {
-                // ≈сли достигнута точка патрулировани€, задержка перед движением к следующей точке
-                patrolTimer += Time.deltaTime;
-                if (patrolTimer >= GetRandomPatrolDelay())
+                if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
                 {
-                    SetNextPatrolPoint();
-                }
-            }
-        }
-        else
-        {
-            // ѕередвигатьс€ к игроку, если он обнаружен
-            if (isPlayerDetected)
-            {
-                if (isChasingPlayer)
-                {
-                    // ѕродолжаем преследовать игрока
-                    ChasePlayer();
-                }
-                else
-                {
-                    // Ќачинаем преследование игрока
-                    StartChasingPlayer();
+                    // ≈сли достигнута точка патрулировани€, задержка перед движением к следующей точке
+                    patrolTimer += Time.deltaTime;
+                    if (patrolTimer >= GetRandomPatrolDelay())
+                    {
+                        SetNextPatrolPoint();
+                    }
                 }
             }
             else
             {
-                // ¬ернутьс€ к патрулированию, если игрок не обнаружен
-                isPatrolling = true;
-                SetNextPatrolPoint();
+                // ѕередвигатьс€ к игроку, если он обнаружен
+                if (isPlayerDetected)
+                {
+                    if (isChasingPlayer)
+                    {
+                        // ѕродолжаем преследовать игрока
+                        ChasePlayer();
+                    }
+                    else
+                    {
+                        // Ќачинаем преследование игрока
+                        StartChasingPlayer();
+                    }
+                }
+                else
+                {
+                    // ¬ернутьс€ к патрулированию, если игрок не обнаружен
+                    isPatrolling = true;
+                    SetNextPatrolPoint();
+                }
+            }
+
+            FindVisibleTargets();
+            if (isTakingDamage)
+            {
+                // ¬раг получил урон, начинаем преследование игрока
+                StartChasingPlayer();
+                isTakingDamage = false;
             }
         }
-
-        FindVisibleTargets();
     }
 
     private void SetNextPatrolPoint()
     {
-        if (patrolPoints.Length == 0)
+        if (availablePatrolIndices.Count == 0)
         {
             Debug.LogWarning("No patrol points assigned to the EnemyController.");
             return;
         }
 
-        // ¬ыбрать следующую точку патрулировани€
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        // ¬ыбираем случайный индекс из доступных дл€ патрулировани€
+        int randomIndex = Random.Range(0, availablePatrolIndices.Count);
+        currentPatrolIndex = availablePatrolIndices[randomIndex];
         patrolTimer = 0f;
+
+        // ”дал€ем выбранный индекс из списка доступных
+        availablePatrolIndices.RemoveAt(randomIndex);
+
+        // ≈сли список доступных дл€ патрулировани€ точек опустел, заполн€ем его заново
+        if (availablePatrolIndices.Count == 0)
+        {
+            for (int i = 0; i < patrolPoints.Length; i++)
+            {
+                availablePatrolIndices.Add(i);
+            }
+        }
 
         // ”становить следующую точку патрулировани€ как цель навигации
         navMeshAgent.SetDestination(patrolPoints[currentPatrolIndex].position);
@@ -148,7 +182,7 @@ public class EnemyController3 : MonoBehaviour
         }
     }
 
-    private void StartChasingPlayer()
+    public void StartChasingPlayer()
     {
         isChasingPlayer = true;
         navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
@@ -169,6 +203,26 @@ public class EnemyController3 : MonoBehaviour
             navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
     }
+
+    public void StopMovement()
+    {
+        if (navMeshAgent != null)
+        {
+            // ќстановить навигацию по маршруту
+            navMeshAgent.isStopped = true;
+            // ќчистить цель навигации
+            navMeshAgent.ResetPath();
+        }
+    }
+
+    public void TakeDamage()
+    {
+        if (!isChasingPlayer)
+        {
+            isTakingDamage = true;
+        }
+    }
+
 
     private void OnEnable()
     {

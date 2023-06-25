@@ -1,11 +1,16 @@
 using UnityEngine;
-/*using System.Collections;
-using System.Collections.Generic;*/
+using System.Collections;
+using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class LifeManager : MonoBehaviour
 {
+    private NavMeshAgent navMeshAgent;
+    private LifeManager lifeManager;
+    private EnemyController3 enemyController;
     public int maxHealth = 100; // Максимальное здоровье
     private int currentHealth; // Текущее здоровье
+    private bool isDead = false;
 
     // public float destroyDelay = 5f; // Задержка перед уничтожением объекта после смерти
 
@@ -17,59 +22,56 @@ public class LifeManager : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth; // Установка начального здоровья
+        navMeshAgent = GetComponent<NavMeshAgent>(); // Получение ссылки на компонент NavMeshAgent
+        lifeManager = GetComponent<LifeManager>(); // Получение ссылки на самого себя (LifeManager)
+        enemyController = GetComponent<EnemyController3>();
     }
 
     public void TakeDamage(int damageAmount)
     {
-      /*  Debug.Log($"damageAmount = {damageAmount}");*/
         if (currentHealth > 0)
         {
-			currentHealth -= damageAmount;
-      /*      Debug.Log($"currentHealth = {currentHealth}");*/
-         
-        } else {
-			Die();
-		}
+            if (enemyController != null && gameObject.CompareTag("Enemy")) 
+            {
+                enemyController.StartChasingPlayer();
+            }
+            currentHealth -= damageAmount;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
     }
 
-     private void Die()
-     {
-        Debug.Log("DIE");
-       /*  if (gameObject.CompareTag("Player"))
-         {
-             // Действия при смерти игрока
-             // Например, вызов контекстного меню для выбора возрождения
-    
-             // Запустить корутину для удаления объекта игрока через 10 секунд
-             StartCoroutine(DestroyPlayer(10f));
-         }
-         else
-         {
-            // Действия при смерти врага
-             // Например, воспроизведение анимации, добавление очков игроку и т. д.
-             // Остановить движение врага
-             GetComponent<EnemyController3>().StopMovement();
-    
-             // Запустить корутину для удаления объекта врага через 10 секунд
-             StartCoroutine(DestroyEnemy(10f));
-        }*/
-     }
+    private void Die()
+    {
+        if (isDead)
+            return;
 
-    // private IEnumerator DestroyPlayer(float delay)
-    // {
-    //     // Ожидание перед удалением объекта игрока
-    //     yield return new WaitForSeconds(delay);
-    //
-    //     // Удаление объекта игрока
-    //     Destroy(gameObject);
-    // }
-    //
-    // private IEnumerator DestroyEnemy(float delay)
-    // {
-    //     // Ожидание перед удалением объекта врага
-    //     yield return new WaitForSeconds(delay);
-    //
-    //     // Удаление объекта врага
-    //     Destroy(gameObject);
-    // }
+        isDead = true;
+
+        if (gameObject.CompareTag("Enemy"))
+        {
+            // Остановить движение врага
+            GetComponent<EnemyController3>().StopMovement();
+
+            // Отключить компонент NavMeshAgent
+            navMeshAgent.enabled = false;
+        }
+
+        // Очистить ссылку на LifeManager, чтобы избежать лишних вызовов метода TakeDamage
+        lifeManager = null;
+
+        // Удалить объект врага через 10 секунд
+        StartCoroutine(DestroyEnemy(10f));
+    }
+
+    private IEnumerator DestroyEnemy(float delay)
+    {
+        // Ожидание перед удалением объекта врага
+        yield return new WaitForSeconds(delay);
+
+        // Удаление объекта врага
+        Destroy(gameObject);
+    }
 }
