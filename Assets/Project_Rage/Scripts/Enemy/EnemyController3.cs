@@ -22,7 +22,7 @@ public class EnemyController3 : MonoBehaviour
     public float chaseDuration = 10f; // ѕродолжительность преследовани€ в секундах
 
     private NavMeshAgent navMeshAgent;
-    private LifeManager lifeManager;
+    //private LifeManager lifeManager;
     private EnemySwordAttack enemySwordAttack;
     private int currentPatrolIndex;
     private float patrolTimer;
@@ -39,7 +39,7 @@ public class EnemyController3 : MonoBehaviour
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        lifeManager = GetComponent<LifeManager>();
+        //lifeManager = GetComponent<LifeManager>();
         enemySwordAttack = GetComponent<EnemySwordAttack>();
 
     }
