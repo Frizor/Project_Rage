@@ -9,7 +9,7 @@ public class DamageDealerPlayer : MonoBehaviour
         if (targetCollider.CompareTag("Enemy")) // Проверяем, что столкнулись с врагом
         {
             EnemyLifeManager enemyLifeManager = targetCollider.GetComponent<EnemyLifeManager>();
-            HealthBarUI healthBarUI = targetCollider.GetComponentInChildren<HealthBarUI>();
+            EnemyHealthBarUI healthBarUI = targetCollider.GetComponentInChildren<EnemyHealthBarUI>();
 
             if (enemyLifeManager != null && healthBarUI != null)
             {

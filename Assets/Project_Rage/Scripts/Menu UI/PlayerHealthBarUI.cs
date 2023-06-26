@@ -9,15 +9,33 @@ public class PlayerHealthBarUI : MonoBehaviour
     [SerializeField] private Image fill;
     [SerializeField] private TextMeshProUGUI healthText;
 
-    public void SetMaxHealth(int health)
+    [SerializeField][Range(0f, 100f)] private float maxHealth = 100f;
+    [SerializeField][Range(0f, 100f)] private float currentHealth = 100f;
+
+    private void Start()
     {
-        slider.maxValue = health;
+        InitializeHealthBar();
     }
 
-    public void SetHealth(int health)
+    public void SetMaxHealth(float health)
     {
-        slider.value = health;
+        maxHealth = health;
+        slider.maxValue = Mathf.RoundToInt(health);
+        slider.value = Mathf.RoundToInt(health);
+        fill.color = gradient.Evaluate(1f);
+    }
+
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+        slider.value = Mathf.RoundToInt(health);
         fill.color = gradient.Evaluate(slider.normalizedValue);
-        healthText.text = health.ToString();
+        healthText.text = health.ToString(); // Обновление текстового значения здоровья
+    }
+
+    private void InitializeHealthBar()
+    {
+        SetMaxHealth(maxHealth);
+        SetHealth(currentHealth);
     }
 }
