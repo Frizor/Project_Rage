@@ -62,7 +62,7 @@ public class EnemyLifeManager : MonoBehaviour
         yield return new WaitForSeconds(destroyDelay);
 
         // ”ничтожаем весь объект EnemyPrefab
-        Destroy(gameObject);
+        Destroy(transform.root.gameObject);
     }
 }
 
