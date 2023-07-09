@@ -1,13 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-	public Transform cam;
+    private Transform cam;
 
-    void LateUpdate()
+    private void Start()
     {
-		transform.LookAt(transform.position + cam.forward);
+        cam = CameraManager.MainCameraTransform;
+    }
+
+    private void LateUpdate()
+    {
+        transform.LookAt(transform.position + cam.forward);
     }
 }

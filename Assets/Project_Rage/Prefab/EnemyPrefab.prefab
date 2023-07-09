@@ -275,7 +275,7 @@ Transform:
   - {fileID: 5700303310308474282}
   - {fileID: 2676886854413951646}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5654607762847941549
 GameObject:
@@ -842,7 +842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4856008517693900375, guid: db187417562a1024fb89143967350dee, type: 3}
       propertyPath: patrolDelayMin
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4856008517693900375, guid: db187417562a1024fb89143967350dee, type: 3}
       propertyPath: patrolPoints.Array.data[0]
