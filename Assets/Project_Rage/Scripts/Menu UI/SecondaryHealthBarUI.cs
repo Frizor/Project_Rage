@@ -3,9 +3,15 @@ using UnityEngine.UI;
 
 public class SecondaryHealthBarUI : MonoBehaviour
 {
-    public Slider healthSlider; // Ссылка на Slider второй полоски здоровья
-    public Gradient gradient; // Градиент для второй полоски здоровья
-    public Image fill; // Изображение для второй полоски здоровья
+    public Slider healthSlider;
+    public Gradient gradient;
+    public Image fill;
+
+    public void SetMaxHealth(float health)
+    {
+        healthSlider.maxValue = health;
+        fill.color = gradient.Evaluate(1f);
+    }
 
     public void SetHealth(float health)
     {

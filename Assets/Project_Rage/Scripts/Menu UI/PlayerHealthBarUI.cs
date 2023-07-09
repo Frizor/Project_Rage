@@ -1,4 +1,56 @@
+using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
+public class PlayerHealthBarUI : MonoBehaviour
+{
+    [SerializeField] private Slider slider;
+    [SerializeField] private Gradient gradient;
+    [SerializeField] private Image fill;
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    private PlayerLifeManager playerLifeManager;
+    private SecondaryHealthBarUI secondaryHealthBarUI;
+
+    private void Start()
+    {
+        playerLifeManager = FindObjectOfType<PlayerLifeManager>();
+        secondaryHealthBarUI = FindObjectOfType<SecondaryHealthBarUI>();
+
+        if (playerLifeManager != null)
+        {
+            SetMaxHealth(playerLifeManager.maxHealth);
+            SetHealth(playerLifeManager.CurrentHealth);
+        }
+    }
+
+    public void SetMaxHealth(float health)
+    {
+        slider.maxValue = health;
+        slider.value = playerLifeManager.CurrentHealth;
+        fill.color = gradient.Evaluate(1f);
+
+        if (secondaryHealthBarUI != null)
+        {
+            secondaryHealthBarUI.SetMaxHealth(health);
+        }
+    }
+
+    public void SetHealth(float health)
+    {
+        slider.value = health;
+        fill.color = gradient.Evaluate(slider.normalizedValue);
+        healthText.text = health.ToString(); // Обновление текстового значения здоровья
+
+        if (secondaryHealthBarUI != null)
+        {
+            secondaryHealthBarUI.SetHealth(health);
+        }
+    }
+}
+
+
+/*using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,8 +96,7 @@ public class PlayerHealthBarUI : MonoBehaviour
         SetMaxHealth(maxHealth);
         SetHealth(currentHealth);
     }
-}
-
+}*/
 
 /*using TMPro;
 using UnityEngine;

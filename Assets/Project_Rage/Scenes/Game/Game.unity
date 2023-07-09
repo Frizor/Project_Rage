@@ -2087,9 +2087,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 665645045}
   healthText: {fileID: 1559122042}
-  secondaryHealthBarUI: {fileID: 390483831}
-  maxHealth: 100
-  currentHealth: 100
 --- !u!1 &295915495 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1199487087404034555, guid: 2fa9fec81aeaef4418a83402d795e7ab, type: 3}
@@ -4702,9 +4699,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 536938285}
   healthText: {fileID: 1726787638}
-  secondaryHealthBarUI: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 100
 --- !u!114 &602893842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5324,7 +5318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7977b90ec5f5945a2b8c20dc5207be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
 --- !u!114 &643093719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8723,9 +8717,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 1135920040}
   healthText: {fileID: 1917648948}
-  secondaryHealthBarUI: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 100
 --- !u!1 &1105119708 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6729454383220019279, guid: f27991316dca05d498158c92c576dffc, type: 3}
@@ -9803,11 +9794,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2781169666792136704, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2781169666792136704, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4026500274073519013, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
       propertyPath: m_Name
@@ -9931,7 +9922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8441892817461012807, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8847977504054082430, guid: e757836bd95cc8642af1da9e2aff4a15, type: 3}
