@@ -226,6 +226,8 @@ public class EnemyController3 : MonoBehaviour
 
     private List<int> availablePatrolIndices = new List<int>();
 
+    //int expAmount = 10;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();

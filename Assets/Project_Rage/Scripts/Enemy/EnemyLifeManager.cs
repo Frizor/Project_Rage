@@ -12,6 +12,9 @@ public class EnemyLifeManager : MonoBehaviour
     private EnemyController3 enemyController3;
     private EnemySwordAttack enemySwordAttack;
 
+    private int expAmount = 10;
+    private ExperienceManager experienceManager;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -23,6 +26,14 @@ public class EnemyLifeManager : MonoBehaviour
         {
             healthBarUI.SetMaxHealth(maxHealth);
             healthBarUI.SetHealth(currentHealth);
+        }
+
+        // Находим объект ExperienceManager по тегу
+        GameObject experienceManagerObject = GameObject.FindGameObjectWithTag("ExperienceManager");
+        if (experienceManagerObject != null)
+        {
+            // Получаем компонент ExperienceManager из найденного объекта
+            experienceManager = experienceManagerObject.GetComponent<ExperienceManager>();
         }
     }
 
@@ -47,8 +58,17 @@ public class EnemyLifeManager : MonoBehaviour
             if (enemySwordAttack != null)
                 enemySwordAttack.enabled = false;
 
+            // Добавить опыт при смерти врага
+            ExperienceManager.Instance.AddExperience(expAmount);
+
             // Вызываем корутину для уничтожения врага через заданную задержку
             StartCoroutine(DestroyAfterDelay());
+
+            // Добавляем опыт
+            if (experienceManager != null)
+            {
+                experienceManager.AddExperience(expAmount);
+            }
         }
 
         if (healthBarUI != null)
@@ -65,6 +85,7 @@ public class EnemyLifeManager : MonoBehaviour
         Destroy(transform.root.gameObject);
     }
 }
+
 
 
 /*using UnityEngine;

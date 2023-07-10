@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿/*using UnityEditor;
 using UnityEngine;
 
 namespace RPGCharacterAnims
@@ -20,4 +20,4 @@ namespace RPGCharacterAnims
 			EditorGUILayout.LabelField("Before attempting to use the RPG Character Animation Mecanim Animation Pack FREE, you must first ensure that the INPUTS and LAYERS are correctly defined.  There is an included Input.preset and TagLayer.preset which contains all the settings that you can load in.\n \nThe README and other documents are located in the Documentation folder.\n \nYou can remove this message by deleting the SetupInputLayers.cs script in the Editor folder.", EditorStyles.wordWrappedLabel);
 		}
 	}
-}
+}*/
