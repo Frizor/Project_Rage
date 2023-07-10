@@ -24,4 +24,10 @@ public class SwordAttack : MonoBehaviour
             anim.SetBool("Attack", false);
         }
     }
+
+    public void SetAttack(bool isAttacking)
+    {
+        anim.SetBool("Attack", isAttacking);
+    }
+
 }
