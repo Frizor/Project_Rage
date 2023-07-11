@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     private int currentLevel = 1;
 
     private ExperienceBarUI experienceBarUI;
+    private ExperienceManager experienceManager;
     private PlayerLifeManager playerLifeManager;
 
     private void Start()
@@ -43,14 +44,15 @@ public class Character : MonoBehaviour
 
     private void OnEnable()
     {
+        experienceManager = FindObjectOfType<ExperienceManager>();
         // Подписываемся на событие
-        ExperienceManager.Instance.OnExperienceChange += HandleExperienceChange;
+        experienceManager.OnExperienceChange += HandleExperienceChange;
     }
 
     private void OnDisable()
     {
         // Отписываемся от события
-        ExperienceManager.Instance.OnExperienceChange -= HandleExperienceChange;
+        experienceManager.OnExperienceChange -= HandleExperienceChange;
     }
 
     private void HandleExperienceChange(int newExperience)
